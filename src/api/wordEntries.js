@@ -5,7 +5,8 @@ import {
   deleteWordEntry,
   getWordEntryById,
 } from "../services/wordEntry";
-import { getAccessToken, findExactMatchesToWord } from "../services/spotify";
+import { findExactMatchesToWord } from "../services/spotifSearchy";
+import { getAccessToken } from "../services/spotifyAuth";
 
 const route = express.Router();
 
