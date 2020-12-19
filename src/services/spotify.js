@@ -45,18 +45,25 @@ export async function findExactMatchesToWord(word, token) {
   }
   const queryResults = await Promise.all(promises);
 
-  const results = [];
+  let results = [];
   for (let i in queryResults) {
     if (queryResults[i].error) {
       return { error: true, tracks: null };
     }
     const result = findMatch(lowerWord, queryResults[i].tracks);
-    if (result.item) {
-      results.push(result.item);
+    if (result.length > 0) {
+      results = results.concat(result);
     }
   }
 
-  return { error: false, tracks: results };
+  // https://dev.to/marinamosti/removing-duplicates-in-an-array-of-objects-in-js-with-sets-3fep
+  const uniqueResults = Array.from(new Set(results.map((a) => a.uri))).map(
+    (uri) => {
+      return results.find((a) => a.uri === uri);
+    }
+  );
+
+  return { error: false, tracks: uniqueResults };
 }
 
 function getSongs(str, token, notArtists = null, hipster = true, genre = null) {
@@ -91,15 +98,17 @@ function getSongs(str, token, notArtists = null, hipster = true, genre = null) {
 }
 
 function findMatch(word, tracks) {
+  const results = [];
   for (let i in tracks.items) {
     const item = tracks.items[i];
     let name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
     name = name.replace(/[\.!,()\?]/gi, "");
+    name = name.replace(/the /gi, "");
     if (name == word) {
-      return { item };
+      results.push(item);
     }
   }
-  return { item: null };
+  return results;
 }
 
 function generatePolymorphisms(message) {
