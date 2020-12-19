@@ -3,6 +3,7 @@ import {
   getWordEntry,
   postWordEntry,
   deleteWordEntry,
+  getWordEntryById,
 } from "../services/wordEntry";
 import { getAccessToken, findExactMatchesToWord } from "../services/spotify";
 
@@ -11,8 +12,13 @@ const route = express.Router();
 export default (router) => {
   router.use("/words", route);
 
-  route.get("/:word", async (req, res) => {
+  route.get("/search/:word", async (req, res) => {
     const result = await getWordEntry(req.params.word);
+    return res.status(result.status).send(result.wordEntry || result.error);
+  });
+
+  route.get("/:id", async (req, res) => {
+    const result = await getWordEntryById(req.params.id);
     return res.status(result.status).send(result.wordEntry || result.error);
   });
 

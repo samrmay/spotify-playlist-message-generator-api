@@ -12,6 +12,18 @@ export async function getWordEntry(wordName) {
   return { wordEntry: result, error, status };
 }
 
+export async function getWordEntryById(id) {
+  const result = await WordEntry.findById(id);
+
+  let error = null;
+  let status = 200;
+  if (!result) {
+    error = "entry could not be found";
+    status = 404;
+  }
+  return { wordEntry: result, error, status };
+}
+
 export async function postWordEntry(word, tracks) {
   const wordEntry = await WordEntry.findOne({ word: word });
 
