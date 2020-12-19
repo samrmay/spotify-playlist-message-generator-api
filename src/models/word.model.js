@@ -4,8 +4,9 @@ const wordSchema = new mongoose.Schema({
   word: {
     type: String,
     required: true,
+    unique: true,
   },
   songs: [{ String }],
 });
 
-export const word = mongoose.model("word", wordSchema);
+export const Word = mongoose.model("word", wordSchema);
