@@ -48,7 +48,7 @@ export async function findExactMatchesToWord(word, token) {
   const results = [];
   for (let i in queryResults) {
     if (queryResults[i].error) {
-      return { error: true, item: null };
+      return { error: true, tracks: null };
     }
     const result = findMatch(lowerWord, queryResults[i].tracks);
     if (result.item) {
@@ -56,7 +56,7 @@ export async function findExactMatchesToWord(word, token) {
     }
   }
 
-  return { error: false, item: results };
+  return { error: false, tracks: results };
 }
 
 function getSongs(str, token, notArtists = null, hipster = true, genre = null) {

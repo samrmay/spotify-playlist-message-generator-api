@@ -6,7 +6,7 @@ const wordSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  songs: [{ String }],
+  tracks: [String],
 });
 
-export const Word = mongoose.model("word", wordSchema);
+export const WordEntry = mongoose.model("word", wordSchema);
