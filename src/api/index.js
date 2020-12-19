@@ -1,9 +1,9 @@
 import express from "express";
-import test from "./test";
+import spotify from "./spotify";
 
 export default () => {
   const router = express.Router();
-  test(router);
+  spotify(router);
 
   return router;
 };
