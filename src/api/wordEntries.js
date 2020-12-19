@@ -11,11 +11,15 @@ import { getAccessToken } from "../services/spotifyAuth";
 const route = express.Router();
 
 export default (router) => {
-  router.use("/words", route);
+  router.use("/wordEntries", route);
 
   route.get("/search/:word", async (req, res) => {
     const result = await getWordEntry(req.params.word);
-    return res.status(result.status).send(result.wordEntry || result.error);
+    let id = null;
+    if (result.wordEntry) {
+      id = result.wordEntry._id;
+    }
+    return res.status(result.status).send(id || result.error);
   });
 
   route.get("/:id", async (req, res) => {
