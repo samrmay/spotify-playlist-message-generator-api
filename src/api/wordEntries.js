@@ -5,7 +5,8 @@ import {
   deleteWordEntry,
   getWordEntryById,
 } from "../services/wordEntry";
-import { findExactMatchesToWord } from "../services/spotifSearchy";
+import { findExactMatchesToWord } from "../services/spotifySearch";
+import { getSingleTrack, getAllTracks } from "../services/spotifyTracks";
 import { getAccessToken } from "../services/spotifyAuth";
 
 const route = express.Router();
@@ -20,6 +21,16 @@ export default (router) => {
       id = result.wordEntry._id;
     }
     return res.status(result.status).send(id || result.error);
+  });
+
+  route.get("singleTrack/:id", async (req, res) => {
+    const { tracks } = await getWordEntryById(req.params.id);
+    const result = await getSingleTrack(tracks);
+  });
+
+  route.get("alltracks/:id", async (req, res) => {
+    const { tracks } = await getWordEntryById(req.params.id);
+    const result = await getAllTracks(tracks);
   });
 
   route.get("/:id", async (req, res) => {
