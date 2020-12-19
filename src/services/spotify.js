@@ -26,11 +26,14 @@ export async function findExactMatchesToWord(word, token) {
   const genres = [
     null,
     "classical",
+    "country",
     "experimental",
     "indie rock",
     "jazz",
+    "metal",
     "pop",
     "rap",
+    "rock",
     "r&b",
     "techno",
     "video game music",
@@ -99,13 +102,20 @@ function getSongs(str, token, notArtists = null, hipster = true, genre = null) {
 
 function findMatch(word, tracks) {
   const results = [];
+  if (!tracks) {
+    return [];
+  }
   for (let i in tracks.items) {
-    const item = tracks.items[i];
-    let name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
-    name = name.replace(/[\.!,()\?]/gi, "");
-    name = name.replace(/the /gi, "");
-    if (name == word) {
-      results.push(item);
+    try {
+      const item = tracks.items[i];
+      let name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
+      name = name.replace(/[\.!,()\?]/gi, "");
+      name = name.replace(/the /gi, "");
+      if (name == word) {
+        results.push(item);
+      }
+    } catch {
+      // pass
     }
   }
   return results;
