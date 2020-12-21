@@ -1,5 +1,9 @@
 import express from "express";
-import { getAccessToken, getUserId, getRedirectURI } from "../services/spotify";
+import {
+  getAccessToken,
+  getUserId,
+  getRedirectURI,
+} from "../services/spotifyAuth";
 
 const route = express.Router();
 
