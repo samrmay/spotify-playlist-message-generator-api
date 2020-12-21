@@ -34,7 +34,7 @@ export async function findExactMatchesToWord(word, token) {
   let results = [];
   for (let i in queryResults) {
     if (queryResults[i].error) {
-      return { error: true, tracks: null };
+      return { error: queryResults[i].error, tracks: null };
     }
     const result = findMatch(lowerWord, queryResults[i].tracks);
     if (result.length > 0) {

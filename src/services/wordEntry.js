@@ -26,7 +26,6 @@ export async function getWordEntryById(id) {
 
 export async function postWordEntry(word, tracks) {
   const wordEntry = await WordEntry.findOne({ word: word });
-
   if (wordEntry) {
     return {
       wordEntry: wordEntry._id,
@@ -35,9 +34,9 @@ export async function postWordEntry(word, tracks) {
     };
   }
 
-  const trackURIs = tracks.map((item) => item.uri);
+  const trackIDs = tracks.map((item) => item.id);
 
-  const entry = new WordEntry({ word, tracks: trackURIs });
+  const entry = new WordEntry({ word, tracks: trackIDs });
   entry.save();
   if (entry) {
     return { wordEntry: entry, status: 201, error: null };

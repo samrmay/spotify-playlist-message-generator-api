@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const wordSchema = new mongoose.Schema({
+const wordEntrySchema = new mongoose.Schema({
   word: {
     type: String,
     required: true,
@@ -9,4 +9,4 @@ const wordSchema = new mongoose.Schema({
   tracks: [String],
 });
 
-export const WordEntry = mongoose.model("word", wordSchema);
+export const WordEntry = mongoose.model("wordEntry", wordEntrySchema);

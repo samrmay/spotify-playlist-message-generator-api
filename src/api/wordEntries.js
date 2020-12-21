@@ -23,14 +23,28 @@ export default (router) => {
     return res.status(result.status).send(id || result.error);
   });
 
-  route.get("singleTrack/:id", async (req, res) => {
-    const { tracks } = await getWordEntryById(req.params.id);
-    const result = await getSingleTrack(tracks);
+  route.get("/singletrack/:id", async (req, res) => {
+    const wordEntryObj = await getWordEntryById(req.params.id);
+    const { wordEntry } = wordEntryObj;
+    if (!wordEntry) {
+      return res.status(wordEntryObj.status).send(wordEntryObj.error);
+    }
+
+    const result = await getSingleTrack(wordEntry.tracks);
+
+    return res.status(200).send(result);
   });
 
-  route.get("alltracks/:id", async (req, res) => {
-    const { tracks } = await getWordEntryById(req.params.id);
+  route.get("/alltracks/:id", async (req, res) => {
+    const wordEntryObj = await getWordEntryById(req.params.id);
+    const { wordEntry } = wordEntryObj;
+    if (!wordEntry) {
+      return res.status(wordEntryObj.status).send(wordEntryObj.error);
+    }
+
     const result = await getAllTracks(tracks);
+
+    return res.status(200).send(result);
   });
 
   route.get("/:id", async (req, res) => {
@@ -47,11 +61,11 @@ export default (router) => {
       return res.status(400).send("Error");
     }
 
-    const { tracks } = await findExactMatchesToWord(word, accessToken);
-    if (tracks == null || tracks.length == 0) {
-      return res.status(404).send("Error, no songs found");
+    const matchesObj = await findExactMatchesToWord(word, accessToken);
+    let { tracks } = matchesObj;
+    if (!tracks) {
+      return res.status(429).send(matchesObj.error);
     }
-
     const result = await postWordEntry(word, tracks);
     return res.status(result.status).send(result.wordEntry || result.error);
   });

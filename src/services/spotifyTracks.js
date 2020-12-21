@@ -1,5 +1,6 @@
 import getRandomItem from "./getRandomItem";
-import getAccessToken from "./spotifyAuth";
+import { getAccessToken } from "./spotifyAuth";
+import fetch from "node-fetch";
 
 export async function getSingleTrack(trackURIs) {
   const trackURI = getRandomItem(trackURIs);
