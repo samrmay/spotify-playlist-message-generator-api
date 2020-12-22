@@ -24,7 +24,12 @@ export default (router) => {
   });
 
   route.get("/singletrack/:id", async (req, res) => {
-    const wordEntryObj = await getWordEntryById(req.params.id);
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).send("invalid id");
+    }
+
+    const wordEntryObj = await getWordEntryById(id);
     const { wordEntry } = wordEntryObj;
     if (!wordEntry) {
       return res.status(wordEntryObj.status).send(wordEntryObj.error);
@@ -36,7 +41,12 @@ export default (router) => {
   });
 
   route.get("/alltracks/:id", async (req, res) => {
-    const wordEntryObj = await getWordEntryById(req.params.id);
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).send("invalid id");
+    }
+
+    const wordEntryObj = await getWordEntryById(id);
     const { wordEntry } = wordEntryObj;
     if (!wordEntry) {
       return res.status(wordEntryObj.status).send(wordEntryObj.error);
