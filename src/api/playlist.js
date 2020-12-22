@@ -19,7 +19,7 @@ export default (router) => {
       userAccessToken,
       id
     );
-    console.log(result);
+
     if (result.playlist) {
       return res.status(201).send(result.playlist);
     }
