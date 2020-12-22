@@ -6,7 +6,7 @@ export function getRedirectURI() {
   const responseType = "response_type=token";
   const redirect = `redirect_uri=${process.env.REDIRECT_URI}`;
   authURL += `&${scopes}&${responseType}&${redirect}`;
-  return authURL;
+  return { authURL };
 }
 
 export function getAccessToken() {
