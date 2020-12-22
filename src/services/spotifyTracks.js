@@ -18,6 +18,10 @@ export async function getAllTracks(trackURIs) {
 }
 
 function searchTrackURI(URI, token) {
+  if (!URI) {
+    return null;
+  }
+
   return fetch(process.env.SPOTIFY_API + `tracks/${URI}`, {
     method: "get",
     headers: {

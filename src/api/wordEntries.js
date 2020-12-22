@@ -36,8 +36,11 @@ export default (router) => {
     }
 
     const result = await getSingleTrack(wordEntry.tracks);
-
-    return res.status(200).send(result);
+    if (result) {
+      return res.status(200).send(result);
+    } else {
+      return res.status(404).send("No tracks with that name");
+    }
   });
 
   route.get("/alltracks/:id", async (req, res) => {
@@ -52,9 +55,12 @@ export default (router) => {
       return res.status(wordEntryObj.status).send(wordEntryObj.error);
     }
 
-    const result = await getAllTracks(tracks);
-
-    return res.status(200).send(result);
+    const result = await getAllTracks(wordEntry.tracks);
+    if (result) {
+      return res.status(200).send(result);
+    } else {
+      return res.status(404).send("No tracks with that name");
+    }
   });
 
   route.get("/:id", async (req, res) => {
