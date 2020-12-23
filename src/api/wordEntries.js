@@ -87,6 +87,9 @@ export default (router) => {
   });
 
   route.delete("/:id", async (req, res) => {
+    // TEMP UNTIL AUTHORIZATION METHOD
+    return res.status(401).send("endpoint temporarily disabled");
+    //
     const result = await deleteWordEntry(req.params.id);
     return res.status(result.status).send(result.error || "success");
   });
