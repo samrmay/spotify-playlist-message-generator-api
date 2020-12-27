@@ -77,6 +77,11 @@ export default (router) => {
       return res.status(400).send("Error");
     }
 
+    const getResponse = await getWordEntry(word);
+    if (getResponse.status == 200 || getResponse.status == 201) {
+      return res.status(409).send("Entry already exists");
+    }
+
     const matchesObj = await findExactMatchesToWord(word, accessToken);
     let { tracks } = matchesObj;
     if (!tracks) {

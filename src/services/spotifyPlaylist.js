@@ -9,7 +9,10 @@ export async function createPlaylist(name, tracks, userAccessToken, userId) {
         Authorization: `Bearer ${userAccessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({
+        name,
+        description: "Made with <3 at https://www.playlistmessage.app",
+      }),
     }
   ).then((response) => response.json());
 
