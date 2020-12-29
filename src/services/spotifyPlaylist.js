@@ -11,7 +11,7 @@ export async function createPlaylist(name, tracks, userAccessToken, userId) {
       },
       body: JSON.stringify({
         name,
-        description: "Made with <3 at https://www.playlistmessage.app",
+        description: `Made with <3 at ${process.env.CLIENT_URL}`,
       }),
     }
   ).then((response) => response.json());
@@ -20,7 +20,7 @@ export async function createPlaylist(name, tracks, userAccessToken, userId) {
     return { error: playlist.error };
   }
 
-  const body = tracks.map((item) => item.uri);
+  const body = tracks;
   const maxi = Math.ceil(body.length / 100) * 100;
   for (let i = 1; i < maxi; i += 100) {
     const upper = 100 > body.length ? body.length : 100;

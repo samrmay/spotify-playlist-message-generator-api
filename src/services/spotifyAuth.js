@@ -23,7 +23,9 @@ export function getAccessToken() {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: "grant_type=client_credentials",
-  }).then((response) => response.json());
+  }).then((response) => {
+    return response.json();
+  });
 }
 
 export function getUserId(userAccessToken) {
